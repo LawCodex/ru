@@ -114,6 +114,11 @@ def choose_redaction(reds):
     return sorted(reds, key=lambda r: (r["reddate"], r["redid"]))[-1]
 
 
+def is_placeholder(html):
+    i = html.find("<body")
+    return i < 0 or len(html) - i < 300
+
+
 def fetch_doc(doc, kind, raw):
     h = doc["dochash"]
     out = os.path.join(raw, "docs", h[:2], h + ".json")
@@ -126,11 +131,22 @@ def fetch_doc(doc, kind, raw):
     txt = api_get("/redtext?bpa=ebpi&t=%d&ttl=0" % red["redid"])
     if txt.get("error"):
         print("  error text %s: %s" % (h, txt["error"]), file=sys.stderr)
+    not_ready = None
+    if is_placeholder(txt.get("redtext") or ""):
+        # the current редакция is flagged "текст не готов" (consolidation not finished):
+        # fall back to the most recent earlier редакция whose text is complete
+        not_ready = red
+        earlier = sorted([r for r in reds["redactions"] if r.get("redcompleted") and r["reddate"] <= red["reddate"]
+                          and r["redid"] != red["redid"]], key=lambda r: (r["reddate"], r["redid"]))
+        if earlier:
+            red = earlier[-1]
+            txt = api_get("/redtext?bpa=ebpi&t=%d&ttl=0" % red["redid"])
     rec = {
         "kind": kind,
         "doc": doc,
         "redactions": reds.get("redactions"),
         "redaction": red,
+        "not_ready": not_ready,
         "serverdate": reds.get("serverdate"),
         "retrieved": time.strftime("%Y-%m-%d"),
         "html": txt.get("redtext") or "",

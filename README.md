@@ -10,14 +10,20 @@ Retrieved: **2026-10-12** (each file carries its own `retrieved` and `last_amend
 
 <!-- COUNTS -->
 
+**11,770 acts** in total:
+
 | Directory | What | Files |
 |---|---|---|
-| `konstitutsiya/` | Конституция Российской Федерации (with the 2020 amendments and the 2022 changes to Art. 65) | 1 |
+| `konstitutsiya/` | Конституция Российской Федерации (current text incl. the 2020 amendments and the 2022 changes to Art. 65) | 1 |
 | `konstitutsiya/popravki/` | Законы РФ о поправке к Конституции (2008, 2014, 2020) | 5 |
-| `kodeksy/` | Codes in force (Кодексы РФ: ГК ч.1–4, НК ч.1–2, УК, УПК, ГПК, АПК, КАС, КоАП, ТК, СК, ЖК, ЗК, БК, ГрК, ВК, ЛК, ВозК, КТМ, КВВТ, УИК…) | 25 |
-| `fkz/<year>/` | Федеральные конституционные законы in force or not yet in force | 171 |
-| `fz/<year>/` | Федеральные законы in force or not yet in force | … |
-| `zakony-rf/` | Законы Российской Федерации (1991–1993), Законы РСФСР and Основы законодательства still in force | … |
+| `kodeksy/` | Codes in force: ГК ч.1–4, НК ч.1–2, УК, УПК, УИК, ГПК, АПК, КАС, КоАП, ТК, СК, ЖК, ЗК, БК, ГрК, ВК, ЛК, Воздушный, КТМ, КВВТ, Таможенный кодекс 1993 (listed by the source as in force) | 25 |
+| `fkz/<year>/` | Федеральные конституционные законы in force (1994–2026) | 171 |
+| `fz/<year>/` | Федеральные законы in force or adopted but not yet in force (1994–2026; 61 not yet in force) | 11,419 |
+| `zakony-rf/` | Законы Российской Федерации (115), Законы РСФСР (33) and Основы законодательства РФ о нотариате (1) still in force | 149 |
+
+Of the 11,419 federal laws, roughly 8,500 are amending laws («О внесении изменений…») and about
+1,600 are ratification / budget / budget-execution laws. Codes are single files (largest: Tax Code
+Part 2, ~10 MB).
 
 <!-- /COUNTS -->
 
@@ -35,6 +41,10 @@ force, but their substance is already merged into the consolidated acts they ame
 - Subordinate legislation: указы and распоряжения of the President, постановления of the
   Government, ministerial orders, regional legislation, court decisions (incl. Constitutional
   Court), international treaties.
+- For 12 acts (e.g. 79-ФЗ «О государственной гражданской службе», 540-ФЗ federal budget 2024) the
+  portal flags the current редакция as «текст не готов» (consolidation not yet prepared); the
+  most recent complete earlier редакция is published instead and the file's front matter has a
+  `note:` field saying so.
 - Embedded images (formulas, forms, maps) are not copied; they are linked to the official image
   URL on `actual.pravo.gov.ru`.
 
@@ -84,6 +94,7 @@ date: 2006-07-27            # date of signature
 last_amended: 2025-09-01    # date the current редакция applies from
 redaction: 45. с 01.09.2025 (№ … от …), актуальная
 status: in_force            # in_force | not_yet_in_force
+note: …                     # only when the current редакция text is not yet available
 state: Действует с изменениями
 publications: [...]         # official publication sources
 source: http://actual.pravo.gov.ru/content/content.html#hash=…

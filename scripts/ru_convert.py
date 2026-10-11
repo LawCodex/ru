@@ -383,6 +383,8 @@ def front_matter(rec, retrieved):
         "date": parse_date(d.get("docpass0date")),
         "last_amended": parse_date(red.get("reddate")),
         "redaction": (red.get("redcaption") or "").strip(),
+        "note": ("Актуальная редакция «%s» на портале ещё не подготовлена (текст не готов); "
+                 "приведена предыдущая редакция." % rec["not_ready"]["redcaption"].strip()) if rec.get("not_ready") else None,
         "status": STATUS.get(d.get("docstate"), "unknown"),
         "state": d.get("docstate"),
         "publications": d.get("publications") or [],
